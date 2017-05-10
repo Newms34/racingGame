@@ -1,0 +1,162 @@
+html,
+body {
+    width: 100%;
+    height:100%;
+    margin: 0;
+    perspective: 1500px;
+    transform-style: preserve-3d;
+    position: absolute;
+    top:50px;
+    & nav.navbar-default{
+        top:-100px;
+    }
+}
+
+#edit-body {
+    background: #151;
+    height:100%;
+    & .track-bg {
+        // position: absolute;
+        background: #777;
+        height: 90vh;
+        top:0px;
+        padding:0;
+        & .edit-row{
+            position:relative;
+            & .edit-cell{
+                position:relative;
+                display:inline-block;
+                height:100%;
+                box-shadow:0 0 2px #666 inset;
+                text-align:center;
+                & span{
+                    position:absolute;
+                    color:#fff;
+                }
+                &.road{
+                    background:#444;
+                    transition-duration:.5s;
+                }
+                &.road-done{
+                    background:#222;
+                }
+            }
+        }
+    }
+    .downboy{
+        position:fixed;
+        bottom:0px;
+    }
+}
+.edit-pan{
+    padding:0;
+    &.small-edit-ctrl{
+        height:30px;
+        overflow:hidden;
+    }
+    button {
+        height:14spt;
+    }
+}
+.pct-bg{
+    background:rgba(0,0,0,.5);
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    & .road-example{
+        width:20px;
+        height:40px;
+        overflow:hidden;
+        background:#222;
+        font-size:14pt;
+        color:#ccc;
+        span{
+            opacity:0;
+            transition-duration:.5s;
+            z-index:2;
+            position:absolute;
+            color:#fff;
+            top:0;
+            right:0;
+            &:hover{
+                opacity:1;
+            }
+        }
+    }
+}
+
+#logPage{
+    background:linear-gradient(rgba(128,128,0,.5),rgba(0,0,0,.5)),url('http://lorempixel.com/g/900/900/transport/');
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+#passStrCont {
+    width: 80%;
+    height: 25px;
+    background: #333;
+    border: 3px outset #555;
+    border-radius: 3px;
+    #passStrChan {
+        position: relative;
+        width: 98%;
+        height: 80%;
+        left: 1%;
+        top: 10%;
+        border: 2px inset #555;
+        display: inline-block;
+        #passStrBar {
+            position: relative;
+            height: 100%;
+            width: 50%;
+            background: #cfc;
+        }
+    }
+    #pwdExpl {
+        position: absolute;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: #900;
+        left: 15px;
+        top: 0px;
+        border: 2px outset #900;
+        border-radius: 3px;
+        cursor: pointer;
+        transition-duration: .5s;
+        opacity: .5;
+        color: #fff;
+        &:hover {
+            opacity: 1;
+            background: #a00;
+        }
+        &:active {
+            opacity: 1;
+            background: #a00;
+            border: 2px inset #900;
+        }
+    }
+}
+
+.regErr {
+    position: relative;
+    background: #fcc;
+    padding: 2px;
+}
+
+#main-body{
+    background:linear-gradient(to left, rgba(0,0,0,0),rgba(0,0,0,.6)),url('http://lorempixel.com/g/900/900/transport/');
+    background-size:cover;
+    background-attachment:fixed;
+}
+.game-pl{
+    border:1px outset #ccc;
+    text-align:center;
+    background:#fff;
+    &.empty{
+        border:1px inset #ccc;
+        background:#ddd;
+    }
+}

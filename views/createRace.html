@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dave's Racing Game: Create a Game</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/sandal-chest/sandal-chest.css">
+</head>
+
+<body ng-app='raceApp' ng-controller='create-cont' ng-cloak id='main-body'>
+    <div ng-include='"navbar.html"'></div>
+    <div class='col-md-8 col-md-offset-2 panel panel-primary'>
+        <div class='panel-header'>
+            <h2>Create a Game</h2>
+        </div>
+        <div class='panel-body'>
+            <hr>
+            <i>First, pick a track</i>
+            <table class='table table-striped'>
+                <thead>
+                    <tr>
+                        <th colspan=3>
+                            <h3>Available Tracks</h3></th>
+                    </tr>
+                    <tr>
+                        <th>Pick</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show='!trackBlurbs.length'>
+                        <td colspan='3' class='alert alert-danger'>No one's created any tracks yet! Why not <a href="/edit">create one</a>?</td>
+                    </tr>
+                    <tr ng-show='trackBlurbs.length' ng-repeat='trk in trackBlurbs'>
+                        <td>
+                            <input type="radio" name="trackPick" ng-model='trackPick' value='{{trk.id}}'>
+                        </td>
+                        <td>{{trk.name}}</td>
+                        <td>{{trk.desc}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <i>Now, some optional bits!</i>
+            <br>
+            <div class='panel panel-info panel-body'>
+                <div class='row'>
+                    <label for='pwd' class='col-md-2'>Password (optional):</label>
+                    <div class='col-md-7'>
+                        <input type="password" id='pwd' ng-model='pwd'>
+                    </div>
+                </div>
+                <div class='row' ng-show='pwd.length'>
+                    <label for='pwdDup' class='col-md-2'>Password, again:</label>
+                    <div class='col-md-7'>
+                        <input type="password" id='pwdDup' ng-model='pwdDup'>
+                    </div>
+                </div>
+                <div class='row' ng-show='pwd && pwdDup && pwdDup!=pwd'>
+                    <div class='alert alert-danger'>Uh oh! It looks like your passwords don't match!</div>
+                </div>
+                <hr>
+                <div class='row'>
+                    <div class='col-md-1'>
+                        <input type="checkbox" ng-model='setMaxPlayers' id='setMaxPlayers'>
+                    </div>
+                    <label for='setMaxPlayers' class='col-md-8'>Restrict Number of Players</label>
+                </div>
+                <div class='row' ng-show='setMaxPlayers'>
+                    <label for='maxNum' class='col-md-2'>Max players:</label>
+                    <div class='col-md-7'>
+                        <input min=2 type="number" id='maxNum' ng-model='maxNum'>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <i>And finally, a name!</i>
+            <br>
+            <div class=row>
+                <label for='pwd' class='col-md-2'>Name:</label>
+                <div class='col-md-7'>
+                    <input type="text" id='name' ng-model='name' required>
+                </div>
+            </div>
+            <hr>
+            <div class='row'>
+                <button class='btn btn-primary col-md-4 col-md-offset-4' ng-click='makeGame();'>Create Game</button>
+            </div>
+        </div>
+    </div>
+    <script src='/socket.io-client/dist/socket.io.min.js'></script>
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angular/angular.min.js"></script>
+    <script src="/bootbox.js/bootbox.js"></script>
+    <script src="/angular-bootstrap-context-menu/dist/bootstrapContextMenu-min.js"></script>
+    <script src="/js/all.min.js"></script>
+</body>
+
+</html>

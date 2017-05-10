@@ -1,0 +1,21 @@
+<nav class='navbar navbar-default navbar-fixed-top' ng-controller='nav-cont'>
+    <div class='container-fluid'>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./" ng-class='{"active":getLoc("")}'>Race!</a>
+        </div>
+        <div class='collapse navbar-collapse' id='main-nav'>
+            <ul class='nav navbar-nav'>
+            	<li ng-repeat = 'btn in navButs' ng-class='{"active":getLoc(btn.url)}'><a href="./{{btn.url}}">{{btn.text}}</a></li>
+            	<!-- <li class='active'><a href="./edit">Map Editor</a></li>
+            	<li><a href="#">Join a Race</a></li> -->
+            </ul>
+            <div class='navbar-text pull-right'>Hello, {{$parent.user.name}}</div>
+        </div>
+    </div>
+</nav>

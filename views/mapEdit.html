@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dave's Racing Game: Map Editor</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/sandal-chest/sandal-chest.css">
+</head>
+
+<body ng-app='raceApp' ng-controller='edit-cont' ng-cloak id='edit-body'>
+<div ng-include='"navbar.html"'></div>
+    <div class='col-md-10 col-md-offset-1 panel panel-info panel-body edit-pan' ng-class='{"small-edit-ctrl":editShrink}'>
+        <button class='btn btn-sm btn-danger pull-right' ng-click='editShrink = !editShrink'>&#9881;</button>
+        <div ng-if='!startMade'>Click a cell to choose a start for your track!</div>
+        <hr>
+        <div class='row'>
+            <div class='col-md-2'>Width</div>
+            <div class='col-md-8'>
+                <input type="number" ng-model='w' ng-change='drawCells()' min='1' max='100'>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-2'>Height</div>
+            <div class='col-md-8'>
+                <input type="number" ng-model='h' ng-change='drawCells()' min='1' max='100'>
+            </div>
+        </div>
+        <hr>
+        <div class='row'>
+            <div class='col-md-2'>Track Name</div>
+            <div class='col-md-8'>
+                <input type="text" ng-model='name'>
+            </div>
+        </div>
+         <div class='row'>
+            <div class='col-md-2'>Track Description</div>
+            <div class='col-md-8'>
+                <textarea ng-model='desc' class='col-md-10'></textarea>
+            </div>
+        </div>
+        <hr>
+        <div class='row'>
+            <button class='btn btn-primary col-md-4 col-md-offset-4' ng-disabled='!pathDone' ng-click='save();'>Save Track</button>
+        </div>
+    </div>
+    <div class='col-md-10 col-md-offset-1 track-bg'>
+        <div class='edit-row' ng-repeat='r in rows' style='height:{{100/rows.length}}%;'>
+            <div class='edit-cell' ng-repeat='c in r.cells' style='width:{{100/r.cells.length}}%;border-radius:{{getCellRads(c)}};' ng-mousedown="processCell(c,$event)" oncontextmenu="return false" ng-class='{"road":c.cellType, "road-done":c.cellType && pathDone}' title='{{c.x}},{{c.y}}'>
+            <span ng-if='c.cellType==2'>&#9654;</span>
+            <span ng-if='c.cellType==3'>&#65533;</span>
+            <span ng-if='c.cellType==4'>&#9618;</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class='col-md-12 pct-bg' ng-show='pickCellType'>
+        <br>
+        <br>
+        <div class='col-md-4 col-md-offset-4 panel panel-primary edit-pan'>
+            <div class='panel-heading'>Pick road type</div>
+            <div class='panel-body'>
+                <div class='row'>
+                    <div class='col-md-3'>Pick a type: </div>
+                    <div class='col-md-4'>
+                        <select ng-options='type as type.lbl for type in roadTypes' ng-model='roadSelType' ng-init='roadSelType=roadTypes[0]'></select>
+                    </div>
+                    <div class='col-md-3 road-example'>{{roadSelType.symb}}<span>&#128663;</span></div>
+                </div>
+                <hr>
+                <div class='row'>
+                    Description: <i>{{roadSelType.desc}}</i>
+                </div>
+                <hr>
+                <div class='row'>
+                    <button class='btn btn-primary col-md-4 col-md-offset-4' ng-click='pickRoadType(roadSelType.num)'>Pick</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <script src='/socket.io-client/dist/socket.io.min.js'></script>
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bootbox.js/bootbox.js"></script>
+    <script src="/angular/angular.min.js"></script>
+    <script src="/angular-bootstrap-context-menu/dist/bootstrapContextMenu-min.js"></script>
+    <script src="/js/all.js"></script>
+</body>
+
+</html>

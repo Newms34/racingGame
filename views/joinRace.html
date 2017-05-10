@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dave's Racing Game: Join a Race</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/sandal-chest/sandal-chest.css">
+</head>
+
+<body ng-app='raceApp' ng-controller='join-cont' ng-cloak id='main-body'>
+    <div ng-include='"navbar.html"'></div>
+    <div class='col-md-8 col-md-offset-2 panel panel-primary'>
+        <div class='panel-header'>
+            <h2>Join a Race</h2></div>
+        <div class='panel-body'>
+            <table class='table table-striped'>
+                <thead>
+                    <th>Name</th>
+                    <th>Players</th>
+                    <th>Protected</th>
+                    <th>Join</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat='gm in games'>
+                        <td>{{gm.name}}</td>
+                        <td>
+                            <div class='col-md-12 game-pl' ng-repeat='pl in gm.players'>{{pl}}</div>
+                            <div ng-if='gm.maxPlayers' ng-repeat = 'epl in getRemSlots(gm) track by $index' class='col-md-12 game-pl empty'>(empty slot)</div>
+                            <div ng-if='!gm.maxPlayers' class='col-md-12 game-pl empty'>++</div>
+                        </td>
+                        <td><span ng-if='gm.protected'>yes</span><span ng-if='!gm.protected'>no</span></td>
+                        <td>
+                            <button class='btn btn-primary' ng-click='joinGame(gm)' ng-disabled = 'gm.players.length==gm.maxPlayers'>Join</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src='/socket.io-client/dist/socket.io.min.js'></script>
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angular/angular.min.js"></script>
+    <script src="/bootbox.js/bootbox.js"></script>
+    <script src="/angular-bootstrap-context-menu/dist/bootstrapContextMenu-min.js"></script>
+    <script src="/js/all.min.js"></script>
+</body>
+
+</html>

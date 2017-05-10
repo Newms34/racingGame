@@ -1,0 +1,113 @@
+DMG TYPES:
+0: phys
+1: fire
+2: ice
+3: poison
+4: dark
+5: holy
+
+
+How do we wanna implement mobile devices?
+probly left-tilt right-tilt for left-right movement
+Other control inputs include:
+tilt forward/back: can use, but may be difficult to get it to stop on one PARTICULAR item
+dragging
+simple clicking (tapping?)
+best would be some sort of scroll interface to choose skills, a la TR4's inv ring system
+
+https://jsfiddle.net/tvdvw9aq/58/
+
+
+TO DO:
+1) Add more monsters
+2) Stat check system should be fine.
+3) ADD MOAR LOOTS so we dont keep getting the freakin cook's ring!
+
+
+quest instantiation:
+ - when user reaches a certain lvl. This'll need to be some percentage (or fixed range?) BEFORE the quest's designated level
+ - from merchant. Again, when user reaches appropriate lvl
+
+leveling sys: 
+
+skill upgrade process: after each fight, you get xp depending on level of monster. This is then used in a level system (linear? logarithmic?). After each level, you get a skill point. You can then use accumulated skill point(s) to buy skills. First tier skills are automatically given. 2nd tier costs 1 pt, 3rd tier costs 2 points, 4th tier... 4 points? yet to decide.
+
+reset game doesnt seem to be working. functions are all there... why is dialog not being triggered?
+
+NEED TO MAKE ICICLE DO 2x DMG VS STUNNED. Can (should!) we use this effect for other stuff too? What about other effects? PROFESSION based effects?
+
+
+probly need to rewrite UI panel stuff. Will need to separate it into distinct panels (instead of CurrUIEl stuff).
+
+1 panel for menu
+1 for inventory + xp bar stuff
+1 for quest lists
+1 for CURRENT skills and NEXT skills (tree!)
+1 for beastiary
+
+we can still keep $scope.chInv in main.js, since we'll still need to cycle inventories.
+
+need to, @ some point go thru and remove unused functions. Will have a number of these after UI pan rework
+
+
+https://www.draw.io/#G0B1InMvwUCMHbREk2ZnAzTVpCT00
+
+https://docs.google.com/spreadsheets/d/1pojQLzuZOSipoPisMi3CDh-ySeQqkgkE0xBBMwE_6hU/edit#gid=494119378
+..where is cook's ring used? is it like d2 charms, that it has effect if in inv? THINK SO
+
+do we want imgUrls for all bosses or just essentials?
+
+Skill purchasing now works or at least should!
+
+FIX INVENTORY?:
+A lot of items are returning undefined in the inventory UI. Should console.log em out and see what's being returned.
+
+can (should) we use letsencrypt?
+
+new possible skill fx:
+dmg vs stun
+crit (% extra dmg)
+heal on hit (paly only)
+double-attack? 
+
+possible prof skills:
+WAR:
+-crit (+dmg) chance
+-double attack
+
+SORC:
+-dmg vs active degen (PER degen?)
+
+NECRO:
+-lifesteal
+-sacrifice skills (self damage for major dmg boost)
+-self-degen
+
+PALY:
+-heal on hit
+
+how do we make them feel DIFFERENT?! what about defensive light, offensive light, etc.? profession specific quests? these would probly need to be generated manually
+
+need to separate armor by weightclass (and make more!) - done! armors 
+
+ARMOR CREATOR:
+https://jsfiddle.net/L7wccqc6/10/show/
+
+Allow armor/weap/skill creation via community? in other words, release armor/weap/skill creation engines to public? These'd need a voting system.
+
+
+right now, the player can reload the page to spam xp. we need to find a way to prevent that. snapshot of game @ start of lvl? either that, or make level saving more specific. for 2nd option:
+save curr location. save cells (including ones cleared!). save xp/skills
+quests filtered! yay!
+limit beasts in bestiary panel to those already encountered? would need array on the user model.
+
+need to figure out quest reward system. Should be SOME mount of bonus xp, plus... random unique? do we want uneeks? while this'd require a big rewrite of all loot-related stuff, it'd provide incentive to complete quests. 
+Either that, or make some sort of trophy system. trophies would need to be premade, i think?
+
+music!
+
+xp STILL isnt updating after mons kill
+
+FEAR condition? would need to add 1) weapon affix, 2) flee affect from 'successful' fear, 3) flee version that DOESNT say "successfully fled!", 4) fear effect to skills
+
+fog mode?

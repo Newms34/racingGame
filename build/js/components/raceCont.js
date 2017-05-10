@@ -1,0 +1,9 @@
+app.controller('race-cont',function($scope,userFact){
+	userFact.chkLog().then(function(r){
+		if(r=='no'){
+			window.location.href='./login';
+		}else{
+			$scope.user=r;
+		}
+	});
+})
