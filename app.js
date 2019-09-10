@@ -6,7 +6,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-    compression = require('compression');
+    compression = require('compression'),
+    bcrypt = require('bcrypt');
 app.use(compression());
 app.use(session({
     secret: 'ea augusta est et carissima',
@@ -25,24 +26,27 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use('/', routes);
 var server = http.Server(app);
 var io = require('socket.io')(server);
-var names = [];
+var games = [];
 io.on('connection', function(socket) {
-    socket.on('movData', function(movObj) {
-        //first, if we dont have this name already, reg it
-        if (names.indexOf(movObj.n) == -1) {
-            names.push(movObj.n);
+    socket.on('newGame', function(gameObj) {
+        console.log('new Game submitted')
+        if (gameObj.protected && gameObj.pass) {
+            //game is protected
+            gameObj.salt = bcrypt.genSaltSync(10);
+            gameObj.pass = bcrypt.hashSync(gameObj.pass, gameObj.salt)
         }
-        console.log('movement!', movObj); //update time
-        io.emit('movOut', movObj);
+        games.push(gameObj);
+        io.emit('allGames', {all:games});
     });
-    socket.on('chkName', function(name) {
-        //this is the user on the front end-desktop attempting to claim a phone 'username'. 
-        //If we've got it in the database, go ahead and send that name to desktop. Otherwise, send false
-        console.log('name', name.n, names)
-        if (names.indexOf(name.n) != -1) {
-            io.emit('chkNameRes', { n: name.n })
-        } else {
-            io.emit('chkNameRes', { n: false })
+    socket.on('getGames',function(r){
+        io.emit('allGames',{all:games})
+    })
+    socket.on('attemptJoin',function(gm){
+        if(!gm.protected || (gm.game.protected && gm.pwd && bcrypt.compareSync(gm.pwd, gm.game.pass))){
+            //game is protected and password is correct OR game is not protected
+            socket.join(gm.game.id);
+            gm.game.players.push(gm.user);
+            io.sockets.in(gm.game.id).emit('userJoined',gm.game);//let everyone know a user joined
         }
     })
 });

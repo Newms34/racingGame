@@ -24,20 +24,13 @@ app.controller('create-cont',function($scope,userFact,$http){
 				protected:!!$scope.pwd, 
 				players:[$scope.user.name],
 				maxPlayers:$scope.maxNum,
-				name:$scope.name
+				name:$scope.name,
+				id:Math.floor(Math.random()*9999999).toString(32)
 			};
 			if($scope.pwd){
 				newGame.pass = $scope.pwd;
 			}
-			$http.post('/user/createGame',newGame).then(function(resp){
-				if(resp.data=='err'){
-					bootbox.alert('Error creating game. Sorry!')
-				}else{
-					bootbox.alert('Game created!');
-					//everything okay. redirect us to the main page so we can play
-					window.location.href='./';
-				}
-			})
+			socket.emit('newGame',newGame);
 		}
 	}
 })

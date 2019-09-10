@@ -7,7 +7,7 @@ var usrSchema = new mongoose.Schema({
     pass: String,
     salt: String,
     tracks:[String],
-    activeGames:[String]//array of games (by id) this usr's participating in.
+    inGame:{type:String, default:''}
 }, { collection: 'User' });
 
 var generateSalt = function() {

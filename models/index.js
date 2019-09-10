@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 
 var http = require('https');
 require('./users/');
-require('./races/');
 require('./tracks/');
 console.log('Node Environment:', process.env.NODE_ENV)
 if (!process.env.NODE_ENV || process.env.NODE_ENV != 'prod') {
